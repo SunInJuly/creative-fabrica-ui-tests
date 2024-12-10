@@ -1,6 +1,7 @@
 import test, {expect, Page} from "@playwright/test";
 import {Browser, chromium} from "playwright";
 import { ProductPage } from "../pages/product-page";
+import {faker} from "@faker-js/faker/locale/ar";
 
 
 test.describe("Product Page Test", () => {
@@ -12,7 +13,7 @@ test.describe("Product Page Test", () => {
     test.beforeEach(async () => {
         console.log(`Running ${test.info().title} on product ${productUrl}`);
         browser = await chromium.launch()
-        var page = await browser.newPage();
+        const page = await browser.newPage();
         productPage = new ProductPage(page, productUrl)
     });
 
@@ -23,27 +24,34 @@ test.describe("Product Page Test", () => {
 
     test("guest can open product page and view product details", async () => {
         await productPage.goto()
+        await productPage.isLoaded()
         await expect(productPage.page).toHaveTitle(productName);
-
+        await expect(productPage.productDescription).toContainText('Christmas Tree Paper Lantern')
     });
 
     test("guest can go to login dialog from topbar", async () => {
         await productPage.goto()
-        await expect(productPage.page).toHaveTitle(productName);
-
+        await productPage.isLoaded()
+        await productPage.openSignUpForm()
+        await productPage.signUpDialog.isLoaded()
     });
 
     test("guest can go to login dialog from 'favorites' button", async () => {
         await productPage.goto()
-        await expect(productPage.page).toHaveTitle(productName);
+        await productPage.isLoaded()
+        await productPage.favoritesButton.click()
+        await productPage.signUpDialog.isLoaded()
     });
 
     test("guest can create new user from product page", async () => {
         await productPage.goto()
-        await expect(productPage.page).toHaveTitle(productName);
-
+        await productPage.isLoaded()
+        await productPage.openSignUpForm()
+        await productPage.signUpDialog.isLoaded()
+        const uniqueEmail = faker.internet.email();
+        await productPage.signUpDialog.registerUser(uniqueEmail)
+        await expect(productPage.verifyEmailDialog.emailSent, `should be am email ${uniqueEmail} in otp sent dialog`)
+            .toHaveText(uniqueEmail)
+        // ideally that would have all the registration flow, but not on prod env
     });
-
-
-
 });

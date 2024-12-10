@@ -92,7 +92,7 @@ root/
 │   ├── product-page.ts
 │   ├── checkout-page.ts
 │   │ elements/
-│       ├── login-dialog.ts
+│       ├── sign-up-dialog.ts
 ├── tests/
 │   ├── product-page-tests.spec.ts
 ├── playwright.config.ts

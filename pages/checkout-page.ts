@@ -6,7 +6,7 @@ export class CheckoutPage {
     readonly itemCards: Locator;
     readonly cartTitle: Locator;
 
-    constructor(page: Page, productUrl: string) {
+    constructor(page: Page) {
         this.page = page;
         this.proceedButton = page.locator('#product-title');
         this.itemCards = page.locator('.favorite-off');
