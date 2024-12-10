@@ -1,5 +1,4 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import {th} from "@faker-js/faker";
 import {SingUpDialog} from "./elements/sign-up-dialog";
 import {VerifyEmailDialog} from "./elements/verify-email-dialog";
 
@@ -12,6 +11,7 @@ export class ProductPage {
     readonly signUpButton: Locator;
     readonly favoritesButton: Locator;
     readonly productDescription: Locator;
+    readonly downloadButton: Locator;
 
     constructor(page: Page, productUrl: string) {
         this.page = page;
@@ -22,6 +22,7 @@ export class ProductPage {
         this.signUpButton = page.locator('[aria-label="Top navigation"] button', { hasText: 'Sign Up' });
         this.signUpDialog = new SingUpDialog(page)
         this.verifyEmailDialog = new VerifyEmailDialog(page)
+        this.downloadButton = page.locator('Download for free', { hasText: 'Download for free'})
     }
 
     async isLoaded() {

@@ -1,6 +1,4 @@
-// div#modal-register
-
-import { expect, type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test';
 
 export class VerifyEmailDialog {
     readonly page: Page;
@@ -12,5 +10,4 @@ export class VerifyEmailDialog {
         this.dialog = this.page.locator('div #modal-account');
         this.emailSent = this.dialog.locator('strong');
     }
-
 }

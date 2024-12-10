@@ -7,6 +7,8 @@ This repository contains UI automation tests for the product page [Christmas Tre
 
 - **`pages/`**: Contains Page Object Model (POM) classes for different pages.
     - Example: `product-page.ts` general page for overviewing product information.
+- **`pages/elements`**: Contains Page Elements classes for different complex elements.
+  - Example: `sign-up-dialog.ts` the element with sign up form, reused both on checkout and product pages.
 - **`tests/`**: Contains test scripts written in TypeScript.
     - Example: `product-page-tests.spec.ts` for testing the functionality of the product page.
 - **`playwright.config.ts`**: Configuration file for Playwright.
@@ -49,12 +51,6 @@ To visually debug tests using the Playwright Test Runner UI:
 npx playwright test --ui
 ```
 
-### Run a Specific Test File
-To run a specific test file:
-```bash
-npx playwright test tests/product-page-tests.spec.ts
-```
-
 ### Generate HTML Report
 After running tests, generate an HTML report:
 ```bash
@@ -71,35 +67,13 @@ npx playwright show-report
 ## Tests Overview
 
 The test suite covers the following scenarios for the product page:
-
-1. Page Load Verification:
-    - Confirms the page loads without errors.
-2. Product Content Validation:
-    - Checks the presence and correctness of product title, description, price, and images.
-3. Add to Cart Functionality:
-    - Verifies the product can be added to the cart.
-4. Reviews Section:
-    - Ensures the reviews are displayed correctly (if present).
-5. Responsive Design:
-    - Validates the page renders correctly on different screen sizes.
+1. **Guest can open product page and view product details:** This test verifies that a guest user can successfully open a specific product page and that the page displays the expected title and product description.
+2. **Guest can go to checkout by 'download' button:** This test checks the flow from the product page to the checkout by clicking the 'download' button. It asserts that the checkout page loads correctly, contains one item in the cart, and proceeds to a sign-up dialog upon clicking the 'proceed' button.
+3. **Guest can go to login dialog from topbar:** This test confirms that a guest user can access the login/sign-up dialog via a link in the topbar navigation.
+4. **Guest can go to login dialog from 'favorites' button:** Similar to the previous test, this one ensures a guest can navigate to the login/sign-up dialog from the 'favorites' button on the product page.
+5. **Guest can create new user from product page:** This test covers the user registration process initiated from the product page. It checks the flow from opening the sign-up form to successfully submitting the registration, verifying email dialog appears with success message.
 
 ## Project Setup
-
-### Folder Structure
-```
-root/
-├── pages/
-│   ├── product-page.ts
-│   ├── checkout-page.ts
-│   │ elements/
-│       ├── sign-up-dialog.ts
-├── tests/
-│   ├── product-page-tests.spec.ts
-├── playwright.config.ts
-├── package.json
-├── tsconfig.json
-├── README.md
-```
 
 ### Configuration
 All Playwright settings (e.g., browsers, test timeouts) are managed in `playwright.config.ts`.
