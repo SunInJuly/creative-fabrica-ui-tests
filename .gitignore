@@ -1,0 +1,4 @@
+/playwright-report/
+/.idea/
+/test-results/
+/package-lock.json
